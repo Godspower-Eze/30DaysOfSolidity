@@ -12,4 +12,5 @@ Then, head on to the `README.md` to get an explaination of the smart contract.
 
 Happy learning 😁
 
+By Godspower Eze[https://twitter.com/The_python_dev_]
 
