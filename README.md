@@ -1,6 +1,6 @@
 # 30 Days Of Solidity
 
-This repository would contain 30 Solidity Smart Contracts while explaining different concepts in the language. It aims to
+This repository would contain 30 or more solidity smart contracts while explaining different concepts of the language. It aims to teach you smart contract development; hopefully.
 
 ## How to Use
 
