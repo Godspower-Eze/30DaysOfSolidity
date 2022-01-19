@@ -150,7 +150,7 @@ The value of `_addr`(address of the candidate) is updated to `true` so that it c
 
 It's same as `function addCandidate(address _addr, string memory _name) public{....}` with a few modifications. I know you will figure it out.
 
-## `function vote(address _candidateAddress) public{....}
+## `function vote(address _candidateAddress) public{....}`
 
 Let's go through the logic inside the smart contracts.
 
