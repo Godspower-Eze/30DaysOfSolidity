@@ -82,7 +82,7 @@ Assigns the total number of ether to `balance`
 
 Returns the `balance`
 
-## `function withdraw() external {....}
+## `function withdraw() external {....}`
 
 ### `require(owner == msg.sender, "Only owner can call this function");`
 
