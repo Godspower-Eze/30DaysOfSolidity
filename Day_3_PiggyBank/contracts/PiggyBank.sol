@@ -13,7 +13,7 @@ contract PiggyBank {
     event Withdraw(uint amount);
 
     receive() external payable{
-        emit Withdraw(msg.value);
+        emit Deposit(msg.value);
     }
 
     function getBalance() external view returns(uint){
@@ -24,7 +24,7 @@ contract PiggyBank {
 
     function withdraw() external {
         require(owner == msg.sender, "Only owner can call this function");
-        emit Deposit(address(this).balance);
+        emit Withdraw(address(this).balance);
         selfdestruct(payable(msg.sender));
     }
 }
