@@ -47,7 +47,7 @@ contract Voting {
     }
 
     function vote(address _candidateAddress) public{
-        require(voterInserted[msg.sender] == true);
+        require(voterInserted[msg.sender] == true, "You are not among the voters");
         Voters storage voter = voters[msg.sender];
         require(voter.voted == false, "You can't vote twice");
         votes[_candidateAddress] = votes[_candidateAddress] + 1;
