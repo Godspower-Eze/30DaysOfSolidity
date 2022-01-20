@@ -61,8 +61,7 @@ This is the variable name of the mapping.
 
 ## `event TaskCreated(uint id, string content, bool completed);`
 
-An event used for logging in the smart contract. These logs are stored on blockchain and are accessible using address of the contract till
-the contract is present on the blockchain. An event generated is not accessible from within contracts, not even the one which have created and emitted them.
+An event used for logging in the smart contract. These logs are stored on blockchain and are accessible using address of the contract. An event generated is not accessible from within contracts, not even the one which have created and emitted them.
 
 This event emits an id of unsigned integer(`uint`) type, content of string type(`string`) and boolean(`bool`) value of completed 
 
