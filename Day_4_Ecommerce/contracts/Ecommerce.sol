@@ -27,6 +27,10 @@ contract Ecommerce {
         uint[] products;
     }
 
+    event UserAdded(address userAddress, string name, bool isMerchant);
+    event ProductAdded(uint id, address owner, string name, string description, uint price);
+    event ProductBought(uint id, address newOwner, string name, string description, uint amountPaid);
+
     mapping(address => User) public users;
     mapping(address => bool) public userAdded;
 
@@ -58,12 +62,14 @@ contract Ecommerce {
         users[msg.sender] = User({name:_name, location:_location, age:_age, isMerchant:_isMerchant, products:emptyProductsArray});
         userAdded[msg.sender] = true;
         userCount += 1;
+        emit UserAdded(msg.sender, _name, _isMerchant);
     }
 
     function addProduct(string memory _name, string memory _description, uint _price) external addProductOnlyByRegisteredUser onlyMerchantCanAddProduct{
         productCount += 1;
         products[productCount] = Product({name:_name, description:_description, owner:msg.sender, id:productCount, price:_price});
         productAdded[productCount] = true;
+        emit ProductAdded(productCount, msg.sender, _name, _description, _price);
     }
 
     function buyProduct(uint _id) external payable addProductOnlyByRegisteredUser{
@@ -73,6 +79,7 @@ contract Ecommerce {
         address payable addressOwner = payable(_product.owner);
         addressOwner.transfer(_product.price);
         _product.owner = msg.sender;
+        emit ProductBought(_id, msg.sender, _product.name, _product.description, _product.price);
     }
 
     function getBalance() external view returns(uint){
