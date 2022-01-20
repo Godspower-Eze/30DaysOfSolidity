@@ -69,6 +69,7 @@ contract Ecommerce {
         productCount += 1;
         products[productCount] = Product({name:_name, description:_description, owner:msg.sender, id:productCount, price:_price});
         productAdded[productCount] = true;
+        users[msg.sender].products.push(productCount);
         emit ProductAdded(productCount, msg.sender, _name, _description, _price);
     }
 
