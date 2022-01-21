@@ -85,7 +85,7 @@ You can't get all the key-value pairs of `mapping` at once rather you use the ke
 
 ## `mapping(address => bool) public candidateInserted;`
 
-We need a way to track that a candidate has been added to the `mapping` of `candidates` above we use `candidateInserted`.
+We need a way to track that a candidate has been added to the `mapping` of `candidates` above so we use `candidateInserted`.
 
 It maps addresses to boolean(`true` or `false`) so that once an address is added to `candidates`, we add that address to `candidateInserted` and set it to `true`
 unlike it's default `false` so we could use it to check that the candidate has been added. We'll set that later in this guide.
