@@ -3,7 +3,7 @@ pragma solidity >=0.4.22 <0.9.0;
 
 contract GuessAWord {
   address public owner;
-  bytes32 public correctWord;
+  bytes32 public correctWord = 0x3bf63e344ceb27303a6c41784b087cf05d1fea6f2cfa8e1d0a79dfb54a98c671;
 
   constructor(){
       owner = msg.sender;
