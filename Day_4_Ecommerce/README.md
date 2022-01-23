@@ -172,12 +172,12 @@ It then stores it in `storage` using the variable `_products`
 
 ### `require(productAdded[_id] == true, "This product does not exist");`
 
-This checks that product exists by checking the `productAdded` mapping. It throws an error with the message `This product does not exist` if the product does not
+This checks that product exists by checking the `productAdded` mapping. It throws an error and reverts with the message `This product does not exist` if the product does not
 exists.
 
 ### `require(msg.value >= _product.price, "You didn't send enough ether to buy this product");`
 
-Checks that the amount of ether sent while calling this function is greater or equal to the prize of the product about to be bought. It throws an error with
+Checks that the amount of ether sent while calling this function is greater or equal to the prize of the product about to be bought. It throws an error and reverts with
 the message `You didn't send enough ether to buy this product` if ether sent is less.
 
 `msg.value` is the amount of ether that was sent in the transaction. The ether sent is stored in the contract.

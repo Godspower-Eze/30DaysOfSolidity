@@ -86,7 +86,7 @@ Returns the `balance`
 
 ### `require(owner == msg.sender, "Only owner can call this function");`
 
-Checks that the person calling the function `msg.sender` is same as the `owner` of the contract. Else, it throws an error with the message
+Checks that the person calling the function `msg.sender` is same as the `owner` of the contract. Else, it throws an error and reverts with the message
 `Only owner can call this function`
 
 ### `emit Withdraw(address(this).balance);`

@@ -124,11 +124,11 @@ Let's go through the logic inside the function
 not met. This line checks that the person calling(`msg.sender`) the function `addCandidate` is same as the `owner` we defined above. That means, only the deployer can
 call this function.
 
-It throws an error with the message `Only owner can call this function` if the conditions are not met.
+It throws an error and reverts with the message `Only owner can call this function` if the conditions are not met.
 
 ### `require(candidateInserted[_addr] == false, "Candidate can't be added");`
 
-This checks that the candidate address in the `candidateInserted` mapping is `false`. That is, it checks that the candidate has not been added before. Else, it throws
+This checks that the candidate address in the `candidateInserted` mapping is `false`. That is, it checks that the candidate has not been added before. Else, it throws an error and reverts
 the message `Candidate can't be added`.
 
 ### `candidateCount = candidateCount + 1;`
@@ -156,7 +156,7 @@ Let's go through the logic inside the smart contracts.
 
 ### `require(voterInserted[msg.sender] == true);`
 
-Makes sure that the voter is in `mapping` of `voterInserted`. Else, it throws an error with an error message `You are not among the voters`
+Makes sure that the voter is in `mapping` of `voterInserted`. Else, it throws an error and reverts with an error message `You are not among the voters`
 
 ### `Voters storage voter = voters[msg.sender];`
 
@@ -165,7 +165,7 @@ Uses the `msg.sender` as key to get the value in the mapping `voters` in the `st
 
 ### `require(voter.voted == false, "You can't vote twice");`
 
-Checks the value of `voted` in `voter` is `false` which means they haven't voted before. Else, it throws an error with an error message
+Checks the value of `voted` in `voter` is `false` which means they haven't voted before. Else, it throws an error and reverts with an error message
 `You can't vote twice`
 
 ### `votes[_candidateAddress] = votes[_candidateAddress] + 1;`
