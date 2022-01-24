@@ -8,7 +8,7 @@ contract Wallet {
     event Withdraw(address receiver, uint amount);
     event Sent(address sender, address receiver, uint amount);
 
-    bool public locked;
+    bool internal locked;
 
     modifier noReentrant() {
         require(!locked, "No re-entrancy");
