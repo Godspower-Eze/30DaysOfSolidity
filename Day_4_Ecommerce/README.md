@@ -26,7 +26,7 @@ This `struct` defines a user. The user's `age`, `location`,`isMerchant`(This set
 
 ## `event UserAdded(address userAddress, string name, bool isMerchant);`
 
-An event used for logging in the smart contract. These logs are stored on blockchain and are accessible using address of the contract. An event generated is not
+An event is used for logging in the smart contract. These logs are stored on blockchain and are accessible using address of the contract. An event generated is not
 accessible from within contracts, not even the one which have created and emitted them.
 
 This event emits the `address`, `name` and `isMerchant` status of a new user that joins the platform.

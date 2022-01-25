@@ -8,7 +8,7 @@ contract Wallet {
     event Withdraw(address receiver, uint amount);
     event Sent(address sender, address receiver, uint amount);
 
-    bool internal locked;
+    bool locked;
 
     modifier noReentrant() {
         require(!locked, "No re-entrancy");
@@ -32,12 +32,12 @@ contract Wallet {
     function send(address payable receiver, uint amount) external{
         uint balance = balances[msg.sender];
         require(amount <= balance, "You don't have enough ether in your balance");
-        balances[msg.sender] -= amount;
+        balance -= amount;
         balances[receiver] += amount;
         emit Sent(msg.sender, receiver, amount);
     }
 
-    function getBalance() public view returns(uint){
+    function getBalance() external view returns(uint){
         return address(this).balance;
     }
 }
