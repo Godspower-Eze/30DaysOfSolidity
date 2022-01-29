@@ -3,6 +3,7 @@ pragma solidity >=0.4.22 <0.9.0;
 
 contract Crowdfunding{
     address public owner;
+    uint public ownerBalance = 0;
 
     mapping(address => uint) public users;
     mapping(address => bool) public userAdded;
@@ -21,8 +22,8 @@ contract Crowdfunding{
         string description;
         uint target;
         uint amountRaised;
+        uint balance;
         bool targetReached;
-        bool redeemed;
     }
 
     event FundRaiserCreated(
@@ -56,7 +57,7 @@ contract Crowdfunding{
     }
 
     modifier onlyOwner(){
-        require(msg.sender == owner, "Only owner can call contract");
+        require(msg.sender == owner, "Only owner can call this function");
         _;
     }
 
@@ -71,15 +72,17 @@ contract Crowdfunding{
     function startFundRaiser(string memory _title, string memory _desc, uint target) external {
         require(userAdded[msg.sender], "Sorry. You are not a registered user");
         fundsRaisersCount += 1;
-        fundsRaisers[fundsRaisersCount] = FundRaiser(msg.sender, _title, _desc, target, 0, false, false);
+        fundsRaisers[fundsRaisersCount] = FundRaiser(msg.sender, _title, _desc, target, 0, 0, false);
         fundsRaiserAdded[fundsRaisersCount] = true;
         emit FundRaiserCreated(msg.sender, _title, _desc, target);
+        
     }
 
     function fund(uint _id) external payable{
         require(msg.value > 0, "Insufficient fund");
         require(fundsRaiserAdded[_id], "This IDs does not exist in the fundraiser list");
         FundRaiser storage _fund = fundsRaisers[_id];
+        _fund.balance += msg.value;
         _fund.amountRaised += msg.value;
         if(_fund.targetReached == false){
             if(_fund.amountRaised >= _fund.target){
@@ -89,19 +92,20 @@ contract Crowdfunding{
         donations[msg.sender] += msg.value;
         donationsCount += 1;
         emit Funded(msg.sender, msg.value, _id, _fund.title);
-
     }
 
-    function redeemFunds(uint _fundRaiserId) external{
+    function redeemFunds(uint _fundRaiserId, uint amount) external{
         require(fundsRaiserAdded[_fundRaiserId], "This IDs does not exist in the fundraiser list");
         FundRaiser storage _fund = fundsRaisers[_fundRaiserId];
         require(msg.sender == _fund.owner, "You are not the owner of this fundraiser");
+        require(_fund.balance >= amount, "Insufficient balance");
         require(_fund.targetReached, "Target has not been reached");
-        require(!(_fund.redeemed), "This fundraiser has already been redeemed");
-        uint amountSendable = _fund.amountRaised - (_fund.amountRaised/10);
+        uint ownerShare = amount/10;
+        uint amountSendable = amount - ownerShare;
         (bool sent, ) = payable(msg.sender).call{value: amountSendable}("");
         require(sent, "Failed to send Ether");
-        _fund.redeemed = true;
+        _fund.balance -= amount;
+        ownerBalance += ownerShare;
         emit Redeemed(msg.sender, amountSendable, _fundRaiserId, _fund.title);
     }
 
@@ -109,11 +113,9 @@ contract Crowdfunding{
         return address(this).balance;
     }
 
-    function withdrawFromContract(uint _fundRaiserId) external onlyOwner{
-        require(fundsRaiserAdded[_fundRaiserId], "This IDs does not exist in the fundraiser list");
-        FundRaiser memory _fund = fundsRaisers[_fundRaiserId];
-        require(_fund.redeemed, "This fundraiser has already not been redeemed");
-        (bool sent, ) = payable(msg.sender).call{value: address(this).balance}("");
+    function withdraw() external onlyOwner{
+        (bool sent, ) = payable(msg.sender).call{value: ownerBalance}("");
         require(sent, "Failed to send Ether");
+        ownerBalance = 0;
     }
 }
