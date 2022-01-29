@@ -79,7 +79,7 @@ contract Crowdfunding{
     }
 
     function fund(uint _id) external payable{
-        require(msg.value > 0, "Insufficient fund");
+        require(msg.value > 0, "Not enough ether sent");
         require(fundsRaiserAdded[_id], "This IDs does not exist in the fundraiser list");
         FundRaiser storage _fund = fundsRaisers[_id];
         _fund.balance += msg.value;
