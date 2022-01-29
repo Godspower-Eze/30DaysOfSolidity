@@ -109,7 +109,10 @@ contract Crowdfunding{
         return address(this).balance;
     }
 
-    function withdrawFromContract() external onlyOwner{
+    function withdrawFromContract(uint _fundRaiserId) external onlyOwner{
+        require(fundsRaiserAdded[_fundRaiserId], "This IDs does not exist in the fundraiser list");
+        FundRaiser memory _fund = fundsRaisers[_fundRaiserId];
+        require(_fund.redeemed, "This fundraiser has already not been redeemed");
         (bool sent, ) = payable(msg.sender).call{value: address(this).balance}("");
         require(sent, "Failed to send Ether");
     }
