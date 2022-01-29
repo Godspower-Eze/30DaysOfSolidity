@@ -34,7 +34,7 @@ It works similarly to how decorators works in programming languages like python.
 
 This modifier prevents reentrancy attack on a contract. 
 
-I will be explaining the reentrancy attack on `Day 8` of this series but let's look at it from high level for now.
+I will be explaining the reentrancy attack on `Day 12` of this series but let's look at it from high level for now.
 
 ### `require(!locked, "No re-entrancy");`
 
