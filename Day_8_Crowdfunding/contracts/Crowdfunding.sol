@@ -2,7 +2,7 @@
 pragma solidity >=0.4.22 <0.9.0;
 
 contract Crowdfunding{
-    address owner;
+    address public owner;
 
     mapping(address => uint) public users;
     mapping(address => bool) public userAdded;
