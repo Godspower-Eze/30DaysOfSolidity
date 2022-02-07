@@ -32,14 +32,20 @@ contract User{
     }
 
     modifier onlyOwner(){
-        require(msg.sender == owner, "Only owner can call this contract");
+        require(msg.sender == owner, "Only owner can call this function");
         _;
     }
 
     modifier tokenAddedAlready(string memory _tokenName){
-        require(tokenAdded[_tokenName], "Token already added");
+        require(!tokenAdded[_tokenName], "Token already been added");
         _;
     }
+
+    modifier tokenNotAdded(string memory _tokenName){
+        require(tokenAdded[_tokenName], "Token has not been added");
+        _;
+    }
+
 
     function updateName(string memory _newName) external onlyOwner{
         name = _newName;
@@ -58,7 +64,7 @@ contract User{
         tokenAdded[_tokenName] = true;
     }
 
-    function updateTokenBalance(string memory _tokenName, uint _balance) external onlyOwner{
-        tokenBalances[_tokenName] += _balance;
+    function updateTokenBalance(string memory _tokenName, uint _amount) external onlyOwner tokenNotAdded( _tokenName){
+        tokenBalances[_tokenName] += _amount;
     }
 }

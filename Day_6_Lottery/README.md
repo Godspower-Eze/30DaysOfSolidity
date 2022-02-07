@@ -10,7 +10,7 @@ Take a look at the previous contracts for some prequisite knowledge.
 
 ## `address public owner;`
 
-Here, we declare an `owner` variable of `address` type of visibility `public`
+Here, we declare an `owner` variable of `address` type and visibility of `public`
 
 ## `address payable[] players;`
 

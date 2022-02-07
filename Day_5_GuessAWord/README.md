@@ -6,7 +6,7 @@ Take a look at the previous contracts for some prequisite knowledge.
 
 ## `address public owner;`
 
-Here, we declare an `owner` variable of `address` type of visibility `public`
+Here, we declare an `owner` variable of `address` type and visibility of `public`
 
 ## `bytes32 public correctWord = 0x3bf63e344ceb27303a6c41784b087cf05d1fea6f2cfa8e1d0a79dfb54a98c671`
 

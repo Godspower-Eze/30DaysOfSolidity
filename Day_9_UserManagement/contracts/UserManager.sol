@@ -16,7 +16,7 @@ contract UserManager{
     }
 
     modifier onlyOwner(){
-        require(msg.sender == owner, "Only owner can call contract");
+        require(msg.sender == owner, "Only owner can call this function");
         _;
     }
 

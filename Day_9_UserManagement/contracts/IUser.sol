@@ -12,10 +12,10 @@ interface IUser{
     function location() external view returns(string memory);
 
     function tokenBalances(string memory) external view returns(uint);
+
     function tokenAdded(string memory) external view returns(bool);
 
-
-    function updateName(string memory) external;
+    function updateName(string memory _newName) external;
 
     function updateAge(uint _newAge) external;
 
