@@ -186,7 +186,7 @@ Here are some rules for defining an interface
 
 - Variables cannot be declared in interfaces
 
-- Apart from functions, only `enums` and `structs` can be defined inside of interfaces.
+- Apart from functions, only `enums`, `events` and `structs` can be defined inside of interfaces.
 
 Moving on, let's see how it works in our case.
 
