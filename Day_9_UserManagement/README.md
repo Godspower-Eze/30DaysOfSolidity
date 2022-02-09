@@ -74,7 +74,7 @@ A constructor in Object Oriented Programming is a function that is run when an o
 
 In this case, the constructor is executed when a contract is deployed.
 
-That means, any code inside the constructor is run when the contract is deployed. Let's see what's inside the constructor.
+That means, any code inside the constructor is run when the contract is deployed. Note that this constructor takes in arguments(`_id`, `_name`,`_age`, and `_location`) so you need you pass them on deployment. Let's see what's inside the constructor.
 
 ### `owner = msg.sender;`
 
@@ -174,11 +174,11 @@ This is not a smart contract rather it's an `interface`.
 
 Interfaces are not unique to Solidity rather it's a general programming concept.
 
-In Solidity, interfaces are used as a blueprint for another contract to follow or used similarly to an intermediary or an APT between two smart contracts i.e used as a way for a smart contract to call another.
+In Solidity, interfaces are used as a blueprint for another contract to follow or used similarly to an intermediary or an API between two smart contracts i.e used as a way for a smart contract to call another.
 
 In this example, we use it as the latter. Later in this series, we'll see it used as a blueprint.
 
-Here are some rules for defining an interface
+Here are some rules for using an interface
 
 - They only define functions but they don't implement any logic inside of them. You will see it below.
 
@@ -187,6 +187,10 @@ Here are some rules for defining an interface
 - Variables cannot be declared in interfaces
 
 - Apart from functions, only `enums`, `events` and `structs` can be defined inside of interfaces.
+
+- Interfaces can't have constructors or any state variables.
+
+- A contract using an interface must implement all it's function unless it would be marked as an abstract construct using the `abstract` keyword. Else, it would through an error. More on this later in this series.
 
 Moving on, let's see how it works in our case.
 
@@ -315,4 +319,3 @@ As shown above, to call a contract using an interface, pass the contract address
 ## `function getContracts() external view returns(address[] memory){ return contractsAddresses;}`
 
 This function returns the array of contract addresses: `contractsAddresses`.
-
