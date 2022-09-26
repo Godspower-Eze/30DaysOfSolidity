@@ -1,7 +1,8 @@
+# Contract Walkthrough
 
-# Project Overview
+## Project Overview
 
-This is a voting smart contract. It allows for a fair election.
+This is a simple voting smart contract. It allows for a fair election.
 
 Here are conditions met in this project
 
@@ -9,18 +10,18 @@ Here are conditions met in this project
 - Only the controller can add an electoral candidate.
 - Only the controller can add a potential voter.
 - A candidate can only be added once.
-- A voter can only be added or registered.
+- A voter can only be added or registered once.
 - A voter can only vote once; obviously, lol.
 
 Here's a challenge
 
-- Make the contract a multi-signature contract.
+- Enable the contract allow multiple controllers. Hint: Openzeplin *AccessControl* contract
 
-Let's go through the smart contract
+Let's walk through the contract
 
 ## `pragma solidity >=0.4.22 <0.9.0;`
 
-This defines the version of solidity been used. It means the contract would be compiled using rules from version `0.4.22` to versions lower that `0.9.0`.
+This defines the version of solidity been used. It means that the contract would be compiled using rules from version `0.4.22` to versions lower that `0.9.0`.
 
 It could also be defined in this way:
 
@@ -28,7 +29,7 @@ It could also be defined in this way:
 
 ## `contract Voting {.....}`
 
-This creates a contract object just like classes are created in other languages. All the logic of the smart contract is written inside the block created by the contract.
+This creates a contract object just like classes are created in other languages. Most of the logic of the smart contract is written inside the block created by the contract.
 
 ## `address owner;`
 
@@ -42,8 +43,7 @@ This is a data type that holds 20 bytes addresses like `0x205aE213B67751fa825C8F
 
 ### `constructor(){....}`
 
-A constructor in Object Oriented Programming is a function that is run when an object is initialized. That is, when an instance of that object is created.
-In this case, the constructor is executed when a contract is deployed. 
+A constructor in Object Oriented Programming is a function that is run when an object is initialized. That is, when an instance of that object is created. In this case, the constructor is executed when a contract is deployed.
 
 That means, any code inside the constructor is run when the contract is deployed. Let's see what's inside the constructor
 
@@ -51,35 +51,34 @@ That means, any code inside the constructor is run when the contract is deployed
 
 The `owner` variable that was declared above is assigned the value `msg.sender`.
 
-`msg` is an object with a number of attributes in every smart contract and `sender` is one them. `msg.sender` returns the address of the caller of a smart contract.
-In the case of `constructor`, the deployer is the caller so the `owner` is set to the address of the user that deployed the smart contract. Remember above where we 
-mentioned the controller. The person who deploys the smart contract is the controller.
+`msg` is an object with a number of attributes in every smart contract and `sender` is one of them. `msg.sender` returns the address of the caller of a smart contract.
 
-## `uint public candidateCount = 0;`
+In the case of `constructor`, the deployer of the contract is the caller. The `owner` is set to the address of the user that deployed the smart contract. Remember above where we mentioned the *controller*. The person who deploys the smart contract is the *controller*.
 
-This sets the value of the number of electoral candidates. 
+## `uint public candidateCount;`
 
-As we talked about in `Day 1`, `uint` is the unsigned integer type, `public` is the visibility modifier that exposes the variable by providing a getter function;
-in this case `candidateCount()`. And, `candidateCount` the variable name set to `0`.
+This defines holds the number of electoral candidates.
 
-## `uint public votersCount = 0;`
+As we talked about in `Day 1`, `uint` is the *unsigned integer* type, `public` is the visibility modifier that exposes the variable by providing a getter function;
+in this case `candidateCount()`. And, `candidateCount` the variable name is set to the default value of the `uint` type which is `0`.
 
-This is the same as `uint public candidateCount = 0;` above
+## `uint public votersCount;`
+
+This is the same as `uint public candidateCount;` above and this stores the number of voters.
 
 ## `struct Voters { uint id; string name; bool voted;}`
 
 A `struct` is a data type that groups together related data. It's like a database record.
 
-This is a `struct` called `Voters` that stores information of potential voters. Check `Day 1` for more on `struct`
+This is a `struct` called `Voters` that stores information of potential voters. Check `Day 1` for more on `struct`.
 
 ## `struct Candidate{uint id; string name;}`
 
-A `struct` that stores the informations of electoral candidates.
+A `struct` that stores the informations of candidates.
 
 ## `mapping(address => Candidate) public candidates;`
 
-A `mapping` is like a hash-table or dictionary that stores data in a key-value pair format. In this case, the type of the key would an `address` type and the type
-of the value would be the `struct` called `Candidate` created above.
+A `mapping` is like a hash-table or dictionary that stores data in a key-value pair format. In this case, the type of the key would an `address` type and the type of the value would be the `struct` type `Candidate` explained above.
 
 You can't get all the key-value pairs of `mapping` at once rather you use the key to get specific value. Also, you can't get the length of a mapping
 
@@ -88,7 +87,7 @@ You can't get all the key-value pairs of `mapping` at once rather you use the ke
 We need a way to track that a candidate has been added to the `mapping` of `candidates` above so we use `candidateInserted`.
 
 It maps addresses to boolean(`true` or `false`) so that once an address is added to `candidates`, we add that address to `candidateInserted` and set it to `true`
-unlike it's default `false` so we could use it to check that the candidate has been added. We'll set that later in this guide.
+unlike it's default `false`.
 
 ## `mapping(address => uint) public votes;`
 
@@ -100,36 +99,33 @@ This maps addresses to the `Voters` struct that stores the information of potent
 
 ## `mapping(address => bool) public voterInserted;`
 
-This does the same thing as `mapping(address => bool) public candidateInserted;` above; keeping track of the addresses added to the `voters` mapping by setting them
-as either `true` or `false`(default). `true` signifies that the voter has been added to the `voters` mapping and would be used to check that a voter is not added twice.
+This does the same thing as `mapping(address => bool) public candidateInserted;` above; keeping track of the addresses added to the `voters` mapping by setting them as either `true` or `false`(default).
 
 ## `function addCandidate(address _addr, string memory _name) public{....}`
 
-This function is responsible for adding new electoral candidates to the `candidates` mapping.
+This function is responsible for adding new candidates to the `candidates` mapping.
 
-Let's quickly go through as the function definition
+Let's quickly go through the function definition
 
-- `function` is the keyword creating a function like Javascript.
+- `function` is the keyword creating a function just like in Javascript.
 - `addCandidate` is the name of the function.
 - `address _addr`: `address` is the datatype of the argument and `_addr` is the name of the argument which is the address of the candidate.
 - `string memory _name`: `string` is the datatype of the argument, `memory` is the data location of the argument and `_name` is the argument which is the name of 
 the candidate
-- `public` is the visibility modifier as I said previously 
+- `public` is the visibility modifier.
 
 Let's go through the logic inside the function
 
 ### `require(msg.sender == owner, "Only owner can call this function");`
 
-`require` is an in-built function in solidity that can take two arguments; a condition that must be met and an error message that would be thrown if the condtion is
-not met. This line checks that the person calling(`msg.sender`) the function `addCandidate` is same as the `owner` we defined above. That means, only the deployer can
+`require` is an in-built function in solidity that can take two arguments; a boolean condition that must be met and an error message that would be thrown if the condtion is not met. This line checks that the person calling(`msg.sender`) the function `addCandidate` is same as the `owner` we defined above. That means, only the deployer can
 call this function.
 
 It throws an error and reverts with the message `Only owner can call this function` if the conditions are not met.
 
 ### `require(candidateInserted[_addr] == false, "Candidate can't be added");`
 
-This checks that the candidate address in the `candidateInserted` mapping is `false`. That is, it checks that the candidate has not been added before. Else, it throws an error and reverts
-the message `Candidate can't be added`.
+This checks that the candidate address in the `candidateInserted` mapping is `false`. That is, it checks that the candidate has not been added before. Else, it throws an error and reverts the message `Candidate can't be added`.
 
 ### `candidateCount = candidateCount + 1;`
 
@@ -175,4 +171,3 @@ Increments the number of votes by 1 for the candidate that the `voter` just vote
 ### `voter.voted = true;`
 
 Sets the value of `voted` in `voter` to `true` so they wouldn't vote for a second time.
-

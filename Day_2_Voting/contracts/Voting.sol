@@ -8,9 +8,9 @@ contract Voting {
         owner = msg.sender;
     }
 
-    uint public candidateCount = 0;
+    uint public candidateCount;
 
-    uint public votersCount = 0;
+    uint public votersCount;
 
     struct Voters{
         uint id;
