@@ -2,7 +2,7 @@
 
 This is a `piggybank`contract also known as a `saving box`.
 
-In real life, a `saving box` is structured in a way that anyone could slide money into it but only the owner has the right to break it open and collect the money
+In real life, a `saving box` is built in a way that anyone could slide money into it but only the owner has the *right* to break it open and collect the money
 inside of it. That's how our contract works.
 
 Take a look at the previous contracts for some prequisite knowledge.
@@ -16,7 +16,7 @@ Here, we declare an `owner` variable of `address` type and visibility of `public
 ### `constructor(){....}`
 
 A constructor in Object Oriented Programming is a function that is run when an object is initialized. That is, when an instance of that object is created.
-In this case, the constructor is executed when a contract is deployed. 
+In this case, the constructor is executed when a contract is deployed.
 
 That means, any code inside the constructor is run when the contract is deployed. Let's see what's inside the constructor
 
